@@ -21,7 +21,7 @@ spec:
       imagePullPolicy: IfNotPresent
       envFrom:
       - secretRef:
-        name: registry-credentials
+          name: registry-credentials
       tty: true
       command:
       - sleep
