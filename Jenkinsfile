@@ -49,7 +49,7 @@ pipeline {
                         container('buildah'){
                             script {
                                 sh """
-                                buildah login -u \$username -p \$password
+                                buildah login quay.io -u \$username -p \$password
                                 buildah push quay.io/abitocchi/pipeline-image:1.0.0
                                 """
                             }
