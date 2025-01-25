@@ -1,9 +1,0 @@
-promehteus-exporter/.helmignore
-promehteus-exporter/Chart.yaml
-promehteus-exporter/values.yaml
-promehteus-exporter/templates/_helpers.tpl
-promehteus-exporter/templates/deployment.yaml
-promehteus-exporter/templates/ingress.yaml
-promehteus-exporter/templates/NOTES.txt
-promehteus-exporter/templates/service.yaml
-promehteus-exporter/templates/tests/test-connection.yaml
