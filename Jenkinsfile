@@ -36,7 +36,6 @@ pipeline {
                     steps{
                         container('buildah'){
                             script {
-                                sh "cd prometheus-exporter-custom"
                                 sh "buildah --storage-driver vfs bud --isolation chroot -t quay.io/abitocchi/pipeline-image:1.0.0"
                             }
                         }
