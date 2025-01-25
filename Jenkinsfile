@@ -9,7 +9,7 @@ apiVersion: v1
 kind: Pod
 spec:
     securityContext:
-        runAsUser: 1000
+      runAsUser: 1000
 
     volumes:
     - name: buildah-storage
@@ -28,8 +28,8 @@ spec:
       - infinity
       resources:
         limits:
-          cpu: 100m
-          memory: 200Mi
+          cpu: 500m
+          memory: 500Mi
         requests:
           cpu: 50m
           memory: 50Mi
@@ -56,7 +56,7 @@ spec:
                         container('buildah'){
                             script {
                                 sh """
-                                buildah login quay.io -u \$username -p \$password
+                                buildah login quay.io -u "\$username" -p "\$password"
                                 buildah push quay.io/abitocchi/pipeline-image:1.0.0
                                 """
                             }
