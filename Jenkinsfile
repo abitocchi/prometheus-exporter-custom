@@ -15,7 +15,24 @@ spec:
     - name: buildah-storage
       emptyDir: {}
 
+    serviceAccountName: jenkins
+
     containers:
+    - name: helm
+      image: docker.io/alpine/helm:3
+      imagePullPolicy: IfNotPresent
+      tty: true
+      command:
+      - sleep
+      - infinity
+      resources:
+        limits:
+          cpu: 250m
+          memory: 128Mi
+        requests:
+          cpu: 50m
+          memory: 32Mi
+
     - name: buildah
       image: quay.io/buildah/stable:latest
       imagePullPolicy: IfNotPresent
@@ -67,7 +84,7 @@ spec:
                 }
                 stage('Deploy'){
                     steps{
-                        container('jnlp'){
+                        container('helm'){
                             script {
                                 sh """
                                 helm upgrade \
