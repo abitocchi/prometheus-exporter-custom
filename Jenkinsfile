@@ -30,6 +30,12 @@ pipeline {
             requests:
                 cpu: 50m
                 memory: 32Mi
+            volumeMounts:
+            - name: buildah-storage
+                mountPath: /usr/lib/containers/storage/overlay-images
+        volumes:
+        - name: buildah-storage
+            emptyDir: {}
                     '''
                     cloud 'kube-helm'
                     }
