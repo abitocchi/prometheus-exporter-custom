@@ -16,6 +16,9 @@ pipeline {
           - name: buildah
             image: quay.io/buildah/stable:latest
             imagePullPolicy: IfNotPresent
+            envFrom:
+            - secretRef:
+                name: registry-credentials
             tty: true
             command:
             - sleep
@@ -41,6 +44,27 @@ pipeline {
                         }
                     }
                 }
+                stage('Push Image'){
+                    steps{
+                        container('buildah'){
+                            script {
+                                sh """
+                                buildah login -u \$username -p \$password
+                                buildah push quay.io/abitocchi/pipeline-image:1.0.0
+                                """
+                            }
+                        }
+                    }
+                }
+                // stage('Deploy'){
+                //     steps{
+                //         container('jnlp'){
+                //             script {
+                //                 sh "helm install"
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
     }
