@@ -56,8 +56,10 @@ spec:
                         container('buildah'){
                             script {
                                 sh """
+                                set -x
                                 buildah login quay.io -u "\$username" -p "\$password"
-                                buildah push quay.io/abitocchi/pipeline-image:1.0.0
+                                set +x
+                                buildah --storage-driver vfs push quay.io/abitocchi/pipeline-image:1.0.0
                                 """
                             }
                         }
