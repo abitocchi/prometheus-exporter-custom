@@ -29,10 +29,10 @@ spec:
       resources:
         limits:
           cpu: 100m
-          memory: 50Mi
+          memory: 200Mi
         requests:
           cpu: 50m
-          memory: 32Mi
+          memory: 50Mi
 
       volumeMounts:
       - name: buildah-storage
