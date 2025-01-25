@@ -9,11 +9,7 @@ apiVersion: v1
 kind: Pod
 spec:
     securityContext:
-        runAsUser: 1000
-
-    volumes:
-    - name: buildah-storage
-      emptyDir: {}
+      runAsUser: 1000
 
     containers:
     - name: buildah
@@ -34,9 +30,6 @@ spec:
           cpu: 50m
           memory: 32Mi
 
-      volumeMounts:
-      - name: buildah-storage
-        mountPath: /usr/lib/containers/storage/overlay-images
                     '''
                     cloud 'kube-helm'
                     }
