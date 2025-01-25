@@ -13,7 +13,7 @@ pipeline {
             runAsUser: 1000
 
         containers:
-        - name: buildah
+          - name: buildah
             image: quay.io/buildah/stable:latest
             imagePullPolicy: IfNotPresent
             tty: true
