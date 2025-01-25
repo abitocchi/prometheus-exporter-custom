@@ -59,11 +59,30 @@ spec:
                     }
                 }
             stages {
+                stage('Detect image version'){
+                    steps{
+                        container('jnlp'){
+                            script {
+                                // Variables definition
+                                env.IMAGE_REGISTRY = "quay.io/abitocchi"
+                                env.IMAGE_NAME     = "pipeline-image"
+                                if (fileExists("version")){
+                                    env.IMAGE_VERSION = readFile("version").replaceAll("\n", "").replaceAll("\r", "")
+                                }
+                                else {
+                                    env.IMAGE_VERSION = "default"
+                                }
+                            }
+                        }
+                    }
+                }
                 stage('Build Image'){
                     steps{
                         container('buildah'){
                             script {
-                                sh "buildah --storage-driver vfs bud --isolation chroot -t quay.io/abitocchi/pipeline-image:1.0.0"
+                                sh '''
+                                buildah --storage-driver vfs bud --isolation chroot -t "$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
+                                '''
                             }
                         }
                     }
@@ -72,12 +91,12 @@ spec:
                     steps{
                         container('buildah'){
                             script {
-                                sh """
+                                sh '''
                                 set +x
-                                buildah login quay.io -u "\$username" -p "\$password"
+                                buildah login quay.io -u "$username" -p "$password"
                                 set -x
-                                buildah --storage-driver vfs push quay.io/abitocchi/pipeline-image:1.0.0
-                                """
+                                buildah --storage-driver vfs push "$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
+                                '''
                             }
                         }
                     }
@@ -86,15 +105,16 @@ spec:
                     steps{
                         container('helm'){
                             script {
-                                sh """
+                                sh '''
                                 helm upgrade \
                                     --install \
-                                    --set image.tag=1.0.0 \
+                                    --set image.tag="$IMAGE_VERSION" \
+                                    --set image.repository="$IMAGE_REGISTRY/$IMAGE_NAME" \
                                     --namespace devops \
                                     --create-namespace \
                                     prom-exp \
                                     prometheus-exporter/ 
-                                """
+                                '''
                             }
                         }
                     }
