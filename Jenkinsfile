@@ -35,7 +35,7 @@ pipeline {
                 mountPath: /usr/lib/containers/storage/overlay-images
         volumes:
         - name: buildah-storage
-            emptyDir: {}
+          emptyDir: {}
                     '''
                     cloud 'kube-helm'
                     }
