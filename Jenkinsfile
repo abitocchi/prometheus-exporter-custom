@@ -56,24 +56,32 @@ spec:
                         container('buildah'){
                             script {
                                 sh """
-                                set -x
-                                buildah login quay.io -u "\$username" -p "\$password"
                                 set +x
+                                buildah login quay.io -u "\$username" -p "\$password"
+                                set -x
                                 buildah --storage-driver vfs push quay.io/abitocchi/pipeline-image:1.0.0
                                 """
                             }
                         }
                     }
                 }
-                // stage('Deploy'){
-                //     steps{
-                //         container('jnlp'){
-                //             script {
-                //                 sh "helm install"
-                //             }
-                //         }
-                //     }
-                // }
+                stage('Deploy'){
+                    steps{
+                        container('jnlp'){
+                            script {
+                                sh """
+                                helm upgrade \
+                                    --install \
+                                    --set image.tag=1.0.0 \
+                                    --namespace devops \
+                                    --create-namespace \
+                                    prom-exp \
+                                    prometheus-exporter/ 
+                                """
+                            }
+                        }
+                    }
+                }
             }
         }
     }
