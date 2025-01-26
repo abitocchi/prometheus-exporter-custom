@@ -65,7 +65,7 @@ spec:
                             script {
                                 // Variables definition
                                 env.IMAGE_REGISTRY = "quay.io/abitocchi"
-                                env.IMAGE_NAME     = "pipeline-image"
+                                env.IMAGE_NAME     = "prometheus-exporter"
                                 if (fileExists("version")){
                                     env.IMAGE_VERSION = readFile("version").replaceAll("\n", "").replaceAll("\r", "")
                                 }
