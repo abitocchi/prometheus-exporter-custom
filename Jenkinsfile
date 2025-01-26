@@ -13,7 +13,7 @@ spec:
     - name: buildah-storage
       emptyDir: {}
 
-    serviceAccountName: jenkins
+    serviceAccountName: deployer
 
     containers:
     - name: helm
