@@ -76,31 +76,31 @@ spec:
                         }
                     }
                 }
-                stage('Build Image'){
-                    steps{
-                        container('buildah'){
-                            script {
-                                sh '''
-                                buildah --storage-driver vfs bud --isolation chroot -t "$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
-                                '''
-                            }
-                        }
-                    }
-                }
-                stage('Push Image'){
-                    steps{
-                        container('buildah'){
-                            script {
-                                sh '''
-                                set +x
-                                buildah login quay.io -u "$username" -p "$password"
-                                set -x
-                                buildah --storage-driver vfs push "$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
-                                '''
-                            }
-                        }
-                    }
-                }
+                // stage('Build Image'){
+                //     steps{
+                //         container('buildah'){
+                //             script {
+                //                 sh '''
+                //                 buildah --storage-driver vfs bud --isolation chroot -t "$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
+                //                 '''
+                //             }
+                //         }
+                //     }
+                // }
+                // stage('Push Image'){
+                //     steps{
+                //         container('buildah'){
+                //             script {
+                //                 sh '''
+                //                 set +x
+                //                 buildah login quay.io -u "$username" -p "$password"
+                //                 set -x
+                //                 buildah --storage-driver vfs push "$IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION"
+                //                 '''
+                //             }
+                //         }
+                //     }
+                // }
                 stage('Deploy'){
                     steps{
                         container('helm'){
