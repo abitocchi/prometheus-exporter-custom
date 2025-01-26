@@ -55,7 +55,7 @@ spec:
       - name: buildah-storage
         mountPath: /usr/lib/containers/storage/overlay-images
                     '''
-                    cloud 'kube-helm'
+                    cloud 'kubernetes'
                     }
                 }
             stages {
