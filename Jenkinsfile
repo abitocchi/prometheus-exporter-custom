@@ -8,8 +8,6 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
-    securityContext:
-      runAsUser: 1000
 
     volumes:
     - name: buildah-storage
@@ -36,6 +34,8 @@ spec:
     - name: buildah
       image: quay.io/buildah/stable:latest
       imagePullPolicy: IfNotPresent
+      securityContext:
+        runAsUser: 1000
       envFrom:
       - secretRef:
           name: registry-credentials
@@ -70,7 +70,7 @@ spec:
                                     env.IMAGE_VERSION = readFile("version").replaceAll("\n", "").replaceAll("\r", "")
                                 }
                                 else {
-                                    env.IMAGE_VERSION = "default"
+                                    env.IMAGE_VERSION = "latest"
                                 }
                             }
                         }
