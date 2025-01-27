@@ -1,0 +1,22 @@
+{{- if .Values.route.enabled -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "promehteus-exporter.fullname" . }}
+  labels:
+    {{- include "promehteus-exporter.labels" . | nindent 4 }}
+  {{- with .Values.route.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  host: {{ .Values.route.host | quote }}
+  port:
+    targetPort: http
+  # tls:
+  #   insecureEdgeTerminationPolicy: Redirect
+  #   termination: edge
+  to:
+    kind: Service
+    name: {{ include "promehteus-exporter.fullname" $ }}
+{{- end }}
