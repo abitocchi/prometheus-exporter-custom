@@ -13,9 +13,12 @@ spec:
   host: {{ .Values.route.host | quote }}
   port:
     targetPort: http
-  # tls:
-  #   insecureEdgeTerminationPolicy: Redirect
-  #   termination: edge
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: {{ .Values.route.tls.termination }}
+    key: {{ .Values.route.tls.key | toYaml | indent 3 }}
+    certificate: {{ .Values.route.tls.certificate | toYaml | indent 3 }}
+    caCertificate: {{ .Values.route.tls.caCertificate | toYaml | indent 3 }}
   to:
     kind: Service
     name: {{ include "promehteus-exporter.fullname" $ }}
