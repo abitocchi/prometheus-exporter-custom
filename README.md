@@ -27,3 +27,4 @@ oc apply -f k8s
 
 **NOTE**: Ensure to specify the proper image name and registry in this [file](k8s/deployment.yaml)
 
+test
